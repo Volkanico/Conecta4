@@ -76,6 +76,7 @@ public class Tablero {
                     finJuego = true;
                     mostrarTablero(tablero);
                     System.out.println("HA GANADO: " + auxiliarJugador + " CONECTO 4 \033[35mHORIZONTALMENTE!!!\u001B[0m");
+                    System.exit(0);
                 }
             }
         }
@@ -87,6 +88,7 @@ public class Tablero {
                     finJuego = true;
                     mostrarTablero(tablero);
                     System.out.println("HA GANADO: " + auxiliarJugador + " CONECTO 4 \033[35mVERTICALMENTE!!!\u001B[0m");
+                    System.exit(0);
                 }
             }
         }
@@ -98,6 +100,7 @@ public class Tablero {
                     finJuego = true;
                     mostrarTablero(tablero);
                     System.out.println("HA GANADO: " + auxiliarJugador + " CONECTO 4 \033[35mDIAGONALMENTE!!!\u001B[0m");
+                    System.exit(0);
                 }
             }
         }
@@ -107,6 +110,7 @@ public class Tablero {
                     finJuego = true;
                     mostrarTablero(tablero);
                     System.out.println("HA GANADO: " + auxiliarJugador + " CONECTO 4 \033[35mDIAGONALMENTE!!!\u001B[0m");
+                    System.exit(0);
                 }
             }
         }
@@ -134,7 +138,7 @@ public class Tablero {
         return numFilas;
     }
 
-    public int getNumColumnas() {
+    public int getNumColumnas(Tablero tablero) {
         return numColumnas;
     }
 
