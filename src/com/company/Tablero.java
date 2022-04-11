@@ -6,9 +6,6 @@ public class Tablero {
     public static String[][] tablero = new String[numFilas][numColumnas];
 
     private boolean finJuego = false;
-    private boolean tapado;
-    private final String simbolTapat = "Ø";
-
     private int capacidadColumnas = tablero[1].length;
     private int capacidadFilas = tablero.length;
 
@@ -41,18 +38,16 @@ public class Tablero {
         for (int i = 1; i < capacidadColumnas + 1; i++) {
             System.out.print("¯¯¯¯");
         }
-        System.out.println("");
+        System.out.println();
 
     }
-
     public void mostrarInterfazTablero(String jugador1, String caracter1, String jugador2, String caracter2, int jugadasMaximas) {
         System.out.println("=================================================================");
         System.out.println(jugador1 + " : " + caracter1 + "      " + jugador2 + " : " + caracter2);
         System.out.print("==============================================||| JUGADA N°" + jugadasMaximas + " |||");
     }
-
-
     public void imprimirTablero() {
+        String simbolTapat = "Ø";
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
                 tablero[i][j] = simbolTapat;
@@ -64,9 +59,6 @@ public class Tablero {
             }
         }
     }
-
-
-
     public void verificadorGanador(String auxiliarJugador, String auxilarCaracter) {
         //verificacion ganador (horizontal)
         for (int i = 1; i < capacidadFilas; i += 1) {
@@ -79,7 +71,6 @@ public class Tablero {
                 }
             }
         }
-
         //verificacion ganador (vertical)
         for (int i = 0; i < capacidadFilas; i += 1) {
             for (int j = 0; j < capacidadColumnas - 3; j += 1) {
@@ -91,7 +82,6 @@ public class Tablero {
                 }
             }
         }
-
         //verificacion ganador (diagonal)
         for (int i = 0; i < capacidadColumnas - 4 + 1; i += 1) {
             for (int j = 0; j < capacidadFilas - 4 + 1; j += 1) {
@@ -114,29 +104,21 @@ public class Tablero {
             }
         }
     }
-
-
     public boolean isFinJuego() {
         return finJuego;
     }
-
     public void setFinJuego(boolean finJuego) {
         this.finJuego = finJuego;
     }
-
-
     public int getNumColumnas(Tablero tablero) {
         return numColumnas;
     }
-
     public int getCapacidadColumnas() {
         return capacidadColumnas;
     }
-
     public int getCapacidadFilas() {
         return capacidadFilas;
     }
-
     public String[][] getTablero() {
         return tablero;
     }

@@ -1,5 +1,5 @@
 package com.company;
-
+import java.util.Objects;
 import java.util.Scanner;
 
 public class JugadorContraJugador {
@@ -15,7 +15,7 @@ public class JugadorContraJugador {
     int columna = 0;
     int contador = 0;
     String auxiliarJugador;
-
+    Decoracio decoracio = new Decoracio();
     Tablero tablero = new Tablero();
     public void partidaTurnos () {
         controlErrorColumnasJugadorYsuJuego();
@@ -31,14 +31,14 @@ public class JugadorContraJugador {
         if ( jugador1.equals("")) {
             jugador1 = "Jugador 1";
         }
-        cambiarColorNombres();
-
-
+        decoracio.cambiarColorNombres1(jugador1);
+        jugador1 = decoracio.getJugador1J();
         System.out.println(jugador1 + " ingrese un caracter para usarlo en el juego (Puede ser un signo, numero, letra, etc)");
         caracter1 = lector.nextLine();
         posiblesErroresEnCaracterDeJugador1();
         caracter1 = caracter1.toUpperCase();
-        cambiarColorCaracteres();
+        decoracio.cambiarColorCaracteres1(caracter1);
+        caracter1 = decoracio.getCaracter1J();
         System.out.println("======================================================================================");
 
         //datos Jugador 2
@@ -51,14 +51,14 @@ public class JugadorContraJugador {
         if (jugador2.equals("")) {
             jugador2 = "Jugador 2";
         }
-        cambiarColorNombres();
-
-
+        decoracio.cambiarColorNombres2(jugador2);
+        jugador2 = decoracio.getJugador2J();
         System.out.println(jugador2 + " ingrese un caracter para usarlo en el juego (Puede ser un signo, numero, letra, etc)");
         caracter2 = lector.nextLine();
         posiblesErroresEnCaracterDeJugador2();
         caracter2 = caracter2.toUpperCase();
-        cambiarColorCaracteres();
+        decoracio.cambiarColorCaracteres2(caracter2);
+        caracter2 = decoracio.getCaracter2J();
 
         while (!verificador) {
 
@@ -69,7 +69,6 @@ public class JugadorContraJugador {
             partidaTurnos();
         }
     }
-
 
     public void controlErrorColumnasJugadorYsuJuego () {
         try {
@@ -83,7 +82,7 @@ public class JugadorContraJugador {
                 for (int i = tablero.getCapacidadColumnas() - 1; i > -1; i = i - 1) {
                     if (!verificador) {
                         //Si se cumple esta condicion, termina el turno del jugador 1
-                        if (Tablero.tablero[i][columna] != caracter1 && Tablero.tablero[i][columna] != caracter2) {
+                        if (!Objects.equals(Tablero.tablero[i][columna], caracter1) && !Objects.equals(Tablero.tablero[i][columna], caracter2)) {
                             Tablero.tablero[i][columna] = caracter1;
                             verificador = true;
                             jugadasMaximas++;
@@ -105,14 +104,7 @@ public class JugadorContraJugador {
         auxiliarJugador = caracter1;
         tablero.verificadorGanador(jugador1, caracter1);
         tablero.mostrarTablero(tablero.getTablero());
-        if (jugadasMaximas == (tablero.getCapacidadFilas() * tablero.getCapacidadColumnas()) + 1) {
-            tablero.setFinJuego(true);
-            tablero.mostrarTablero(tablero.getTablero());
-            System.out.println("======================");
-            System.out.println("\033[35m¡¡¡EMPATE!!!\u001B[0m");
-            System.out.println("El tablero esta lleno");
-            System.out.println("======================");
-        }
+        empate();
         //Si el jugador 1 no gano en su turno continua con el jugador 2
         if (!tablero.isFinJuego()) {
             //turno jugador 2
@@ -132,7 +124,7 @@ public class JugadorContraJugador {
                         for (int i = tablero.getCapacidadColumnas() - 1; i > -1; i = i - 1) {
                             if (!verificador) {
                                 //Si se cumple esta condicion, termina el turno del jugador 2
-                                if (Tablero.tablero[i][columna] != caracter2 && Tablero.tablero[i][columna] != caracter1) {
+                                if (!Objects.equals(Tablero.tablero[i][columna], caracter2) && !Objects.equals(Tablero.tablero[i][columna], caracter1)) {
                                     Tablero.tablero[i][columna] = caracter2;
                                     verificador = true;
                                     jugadasMaximas++;
@@ -154,37 +146,39 @@ public class JugadorContraJugador {
             verificador = false;
             auxiliarJugador = caracter2;
             tablero.verificadorGanador(jugador2, caracter2);
+            empate();
+        }
+    }
 
-            if (jugadasMaximas == (tablero.getCapacidadFilas() * tablero.getCapacidadColumnas()) + 1) {
-                tablero.setFinJuego(true);
-                tablero.mostrarTablero(tablero.getTablero());
-                System.out.println("======================");
-                System.out.println("\033[35m¡¡¡EMPATE!!!\u001B[0m");
-                System.out.println("El tablero esta lleno");
-                System.out.println("======================");
-            }
+    private void empate() {
+        if (jugadasMaximas == (tablero.getCapacidadFilas() * tablero.getCapacidadColumnas()) + 1) {
+            tablero.setFinJuego(true);
+            tablero.mostrarTablero(tablero.getTablero());
+            System.out.println("======================");
+            System.out.println("\033[35m¡¡¡EMPATE!!!\u001B[0m");
+            System.out.println("El tablero esta lleno");
+            System.out.println("======================");
         }
     }
 
     public void posiblesErroresEnCaracterDeJugador1 (){
-        while (caracter1.length() > 1 || caracter1.equals(null) || caracter1.equals("")) {
+        while (caracter1.length() > 1 || caracter1.equals("")) {
             if (caracter1.length() > 1) {       //Si el caracter ingresado es de mas de una letra
                 System.out.println("\033[35m**ERROR:\u001B[0m El caracter debe ser de una sola letra");
                 System.out.println("ejemplo: 'X' , 'O' , 'V' ...");
                 caracter1 = lector.nextLine();
                 caracter1 = caracter1.toUpperCase();
             }
-            if (caracter1.equals(null) || caracter1.equals("")) {   //Si el caracter no contiene nada
+            if (caracter1.equals("")) {   //Si el caracter no contiene nada
                 System.out.println("\033[35m**ERROR:\u001B[0m El caracter no puede estar vacio, intente nuevamente");
                 caracter1 = lector.nextLine();
                 caracter1 = caracter1.toUpperCase();
             }
         }
     }
-
     public void posiblesErroresEnCaracterDeJugador2 (){
-        while (caracter2.equals(caracter1) || caracter2.length() > 1 || caracter2.equals(null) || caracter2.equals("")) {
-            if (caracter2.equals(null) || caracter2.equals("")) {       //Si el caracter ingresado no contiene nada
+        while (caracter2.equals(caracter1) || caracter2.length() > 1 || caracter2.equals("")) {
+            if (caracter2.equals("")) {       //Si el caracter ingresado no contiene nada
                 System.out.println("\033[35m**ERROR:\u001B[0m El caracter no puede estar vacio, intente nuevamente");
                 caracter2 = lector.nextLine();
                 caracter2 = caracter2.toUpperCase();
@@ -202,15 +196,4 @@ public class JugadorContraJugador {
         }
     }
 
-
-
-    public void cambiarColorCaracteres (){
-        caracter1 = "\033[31m" + caracter1 + "\u001B[0m";
-        caracter2 = "\033[34m" + caracter2 + "\u001B[0m";
-    }
-
-    public void cambiarColorNombres () {
-        jugador1 = "\033[32m" + jugador1 + "\u001B[0m";
-        jugador2 = "\033[36m" + jugador2 + "\u001B[0m";
-    }
 }
