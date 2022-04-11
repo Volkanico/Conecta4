@@ -5,7 +5,7 @@ public class InputOutput {
     int modoDeJuego = 0;
     Scanner lector = new Scanner(System.in);
     boolean verificador = false;
-    boolean verificador2 = false;
+
     String mensajeError = "";
     String jugador1;
     String caracter1;
@@ -17,19 +17,6 @@ public class InputOutput {
     String auxiliarJugador;
 
     Tablero tablero = new Tablero();
-    public void titol () {
-        System.out.println("\033[31m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m\033[34m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m");
-        System.out.println("\033[31m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m \033[31mCONE\u001B[0m\033[34mCTA4\u001B[0m \033[34m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m");
-        System.out.println("\033[31m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m\033[34m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m");
-        System.out.println("\033[31m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m \033[31mHECHO POR \u001B[0m\033[34mVOLKAN :)!\u001B[0m \033[34m‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡\u001B[0m");
-        System.out.println();
-        System.out.println("================================================");
-        System.out.println("       1.- \033[32mJugador 1\u001B[0m vs \033[36mJugador 2\u001B[0m");
-        System.out.println("       2.- \033[32mJugador 1\u001B[0m vs \033[33mOrdenador (FACIL)\u001B[0m");
-        System.out.println("  ============================================");
-        System.out.println("=== ¡ESCRIBE LA MODALIDAD QUE QUIERES JUGAR! ===");
-        System.out.println("  ============================================");
-    }
 
     public void comprobarEntradaDificultad (){
         boolean verificador = false;
@@ -63,15 +50,17 @@ public class InputOutput {
         //datos Jugador 1
         System.out.println("\033[32mJugador 1\u001B[0m ingrese un nick");
         jugador1 = lector.nextLine();
-        if (jugador1.equals(null) || jugador1.equals("")) {
+        if ( jugador1.equals("")) {
             jugador1 = "Jugador 1";
         }
-        jugador1 = "\033[32m" + jugador1 + "\u001B[0m";
+        cambiarColorNombres();
+
 
         System.out.println(jugador1 + " ingrese un caracter para usarlo en el juego (Puede ser un signo, numero, letra, etc)");
         caracter1 = lector.nextLine();
         posiblesErroresEnCaracterDeJugador1();
         caracter1 = caracter1.toUpperCase();
+        cambiarColorCaracteres();
         System.out.println("======================================================================================");
 
         //datos Jugador 2
@@ -81,18 +70,20 @@ public class InputOutput {
             System.out.println("\033[35m**ERROR:\u001B[0m El jugador 1 ya ocupo este nick, ingreso otro");
             jugador2 = lector.nextLine();
         }
-        if (jugador2.equals(null) || jugador2.equals("")) {
+        if (jugador2.equals("")) {
             jugador2 = "Jugador 2";
         }
-        jugador2 = "\033[36m" + jugador2 + "\u001B[0m";
+        cambiarColorNombres();
+
 
         System.out.println(jugador2 + " ingrese un caracter para usarlo en el juego (Puede ser un signo, numero, letra, etc)");
         caracter2 = lector.nextLine();
         posiblesErroresEnCaracterDeJugador2();
         caracter2 = caracter2.toUpperCase();
-        cambiarColorNombres();
+        cambiarColorCaracteres();
 
         while (!verificador) {
+
             tablero.mostrarTablero(tablero.getTablero());
             tablero.mostrarInterfazTablero(jugador1,caracter1, jugador2,caracter2,jugadasMaximas);
             System.out.println(mensajeError);
@@ -101,7 +92,7 @@ public class InputOutput {
         }
     }
 
-    public void controlErrorColumnasJugador1YsuJuego () {
+    public void controlErrorColumnasJugadorYsuJuego () {
         try {
             System.out.println(jugador1 + " escriba el numero de columna para poner su ficha:");
             String auxiliar = lector.nextLine();
@@ -111,11 +102,10 @@ public class InputOutput {
             } else {
                 contador = 1;
                 for (int i = tablero.getCapacidadColumnas() - 1; i > -1; i = i - 1) {
-                    if (!verificador2) {
+                    if (!verificador) {
                         //Si se cumple esta condicion, termina el turno del jugador 1
                         if (Tablero.tablero[i][columna] != caracter1 && Tablero.tablero[i][columna] != caracter2) {
                             Tablero.tablero[i][columna] = caracter1;
-                            verificador2 = true;
                             verificador = true;
                             jugadasMaximas++;
                         } else {
@@ -132,7 +122,6 @@ public class InputOutput {
         } catch (Exception e) {
             mensajeError = "\n\033[35m**ERROR:\u001B[0m Debe ingresar un numero entre el 1 al " + tablero.getCapacidadColumnas();
         }
-        verificador2 = false;
         verificador = false;
         auxiliarJugador = caracter1;
         tablero.verificadorGanador(jugador1, caracter1);
@@ -162,11 +151,10 @@ public class InputOutput {
                     } else {
                         contador = 1;
                         for (int i = tablero.getCapacidadColumnas() - 1; i > -1; i = i - 1) {
-                            if (!verificador2) {
+                            if (!verificador) {
                                 //Si se cumple esta condicion, termina el turno del jugador 2
                                 if (Tablero.tablero[i][columna] != caracter2 && Tablero.tablero[i][columna] != caracter1) {
                                     Tablero.tablero[i][columna] = caracter2;
-                                    verificador2 = true;
                                     verificador = true;
                                     jugadasMaximas++;
                                 } else {
@@ -184,9 +172,7 @@ public class InputOutput {
                     mensajeError = "\n\033[35m**ERROR:\u001B[0m Debe ingresar un numero entre el 1 al " + tablero.getCapacidadColumnas();
                 }
             }
-            verificador2 = false;
             verificador = false;
-            auxiliarJugador = jugador2;
             auxiliarJugador = caracter2;
             tablero.verificadorGanador(jugador2, caracter2);
 
@@ -237,16 +223,25 @@ public class InputOutput {
         }
     }
 
-    public void cambiarColorNombres (){
+    public void cambiarColorCaracteres (){
         caracter1 = "\033[31m" + caracter1 + "\u001B[0m";
         caracter2 = "\033[34m" + caracter2 + "\u001B[0m";
     }
+
+    public void cambiarColorNombres () {
+        jugador1 = "\033[32m" + jugador1 + "\u001B[0m";
+        jugador2 = "\033[36m" + jugador2 + "\u001B[0m";
+    }
+
+
+
     public void partidaTurnos () {
-        controlErrorColumnasJugador1YsuJuego();
+        controlErrorColumnasJugadorYsuJuego();
     }
     public void juego () {
-        titol();
+        Decoracio.titol();
         comprobarEntradaDificultad();
+        tablero.imprimirTablero();
         opcionesDeJuego();
     }
 }

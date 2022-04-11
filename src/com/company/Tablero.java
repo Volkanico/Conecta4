@@ -14,12 +14,12 @@ public class Tablero {
 
     public void mostrarTablero(String[][] tablero) {
         System.out.print("          ");
-        for (int i = 1; i < capacidadColumnas + 1; i += 1) {
+        for (int i = 1; i < capacidadColumnas + 1; i++) {
             System.out.print(i + "   ");
         }
         System.out.println("");
         System.out.print("         ");
-        for (int i = 0; i < capacidadColumnas; i += 1) {
+        for (int i = 0; i < capacidadColumnas; i++) {
             System.out.print("____");
         }
         System.out.println("");
@@ -31,17 +31,18 @@ public class Tablero {
             System.out.println(" |");
             if (i < capacidadFilas - 1) {
                 System.out.print("        |");
-                for (int p = 1; p < capacidadColumnas - 1; p += 1) {
+                for (int p = 1; p < capacidadColumnas - 1; p++) {
                     System.out.print("––––––");
                 }
                 System.out.println("|");
             }
         }
         System.out.print("         ");
-        for (int i = 1; i < capacidadColumnas + 1; i += 1) {
+        for (int i = 1; i < capacidadColumnas + 1; i++) {
             System.out.print("¯¯¯¯");
         }
         System.out.println("");
+
     }
 
     public void mostrarInterfazTablero(String jugador1, String caracter1, String jugador2, String caracter2, int jugadasMaximas) {
@@ -54,16 +55,14 @@ public class Tablero {
     public void imprimirTablero() {
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
-                tablero[i][j] = "Ø";
+                tablero[i][j] = simbolTapat;
             }
         }
         for (int i = 0; i < tablero.length; i++) {
             for (int j = 0; j < tablero[i].length; j++) {
-                System.out.print(tablero[i][j]);
+               tablero[i][j] = simbolTapat;
             }
         }
-
-
     }
 
 
@@ -117,15 +116,6 @@ public class Tablero {
     }
 
 
-
-    public boolean isTapado() {
-        return tapado;
-    }
-
-    public void setTapado(boolean tapado) {
-        this.tapado = tapado;
-    }
-
     public boolean isFinJuego() {
         return finJuego;
     }
@@ -134,9 +124,6 @@ public class Tablero {
         this.finJuego = finJuego;
     }
 
-    public int getNumFilas() {
-        return numFilas;
-    }
 
     public int getNumColumnas(Tablero tablero) {
         return numColumnas;

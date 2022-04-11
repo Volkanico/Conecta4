@@ -6,7 +6,7 @@ public class Main {
 	InputOutput inputOutput = new InputOutput();
 
         Tablero tablero = new Tablero();
-        tablero.imprimirTablero();
+
         inputOutput.juego();
     }
 }
