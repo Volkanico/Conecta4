@@ -27,7 +27,7 @@ public class JugadorContraMaquina {
     public void opcionJugadorContraMaquina () {
         System.out.println("============================================");
         System.out.println("MODO SELECCIONADO:");
-        System.out.println("             \033[32mJugador 1\u001B[0m vs \033[33mComputadorNoob\u001B[0m");
+        System.out.println("             \033[32mJugador 1\u001B[0m vs \033[33mOrdenador\u001B[0m");
         //datos Jugador 1
         System.out.println("\033[32mJugador 1\u001B[0m ingrese un nick");
         jugador1 = lector.nextLine();
@@ -58,7 +58,7 @@ public class JugadorContraMaquina {
         //COLORES
         decoracio.cambiarColorCaracteres1(caracter1);
         caracter1 = decoracio.getCaracter1J();
-        jugador2 = "\033[33mComputadorNoob\u001B[0m";
+        jugador2 = "\033[33mOrdenador\u001B[0m";
         caracter2 = "\033[33m§\u001B[0m";
 
         while (!finJuego) {  //turno jugador 1
@@ -114,7 +114,7 @@ public class JugadorContraMaquina {
                     columna = (int) (Math.random() * tablero.getCapacidadColumnas());
                     for (int i = tablero.getCapacidadColumnas() - 1; i > -1; i = i - 1) {
                         if (!verificador) {
-                            //Si se cumple esta condicion, termina el turno del jugador 2
+                            //Si se cumple esta condicion, termina el turno del jugador 2 / ordenador
                             if (!Objects.equals(Tablero.tablero[i][columna], caracter2) && !Objects.equals(Tablero.tablero[i][columna], caracter1)) {
                                 Tablero.tablero[i][columna] = caracter2;
 
@@ -140,6 +140,8 @@ public class JugadorContraMaquina {
             System.out.println("======================");
         }
     }
+
+    /* Comprovar amb random fins que la jugada de l'ordenador sigui una jugada eficient, comprovant a cada clicada amb el random si guanya o no al jugador */
 }
 
 

@@ -4,9 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 	InputOutput inputOutput = new InputOutput();
-
-        Tablero tablero = new Tablero();
-
         inputOutput.juego();
     }
 }
