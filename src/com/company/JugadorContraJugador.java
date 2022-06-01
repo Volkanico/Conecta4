@@ -116,7 +116,7 @@ public class JugadorContraJugador {
                 System.out.println(mensajeError);
                 mensajeError = "";
                 try {
-                    System.out.println(jugador2 + " escriba el numero de columna para poner su ficha:");
+                    System.out.println(jugador2.getJugador() + " escriba el numero de columna para poner su ficha:");
                     String auxiliar = lector.nextLine();
                     columna = Integer.parseInt(auxiliar) - 1;
                     if (columna > tablero.getCapacidadColumnas() - 1 || columna < 0) {
